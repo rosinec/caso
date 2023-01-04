@@ -144,6 +144,14 @@ class CloudRecord(object):
                 if k in self._version_field_map[version]}
 
     @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value.encode('ascii', 'ignore').decode('utf-8')
+
+    @property
     def wall_duration(self):
         duration = None
         if self._wall_duration is not None:
@@ -198,7 +206,7 @@ class CloudRecord(object):
         d = {
             'VMUUID': self.uuid,
             'SiteName': self.site,
-            'MachineName': self.name.encode('ascii', 'ignore').decode('utf-8'),
+            'MachineName': self.name,
             'LocalUserId': self.user_id,
             'LocalGroupId': self.group_id,
             'FQAN': self.fqan,

@@ -102,3 +102,27 @@ class TestCasoManager(base.TestCase):
         d_04 = r.as_dict(version="0.4")
         self.assertDictContainsSubset(expected, d_04)
         self.assertDictContainsSubset(expected_04, d_04)
+
+    def test_no_non_ascii_characters(self):
+        server_id = uuid.uuid4().hex
+        site_name = "site-foo"
+        server_name = "BujamyWObłokach"
+        server_user_id = uuid.uuid4().hex
+        server_project_id = uuid.uuid4().hex
+        fqan = "FooVO"
+        status = 'completed'
+        image_id = uuid.uuid4().hex
+        user_dn = "/Foo/bar/baz"
+
+        r = record.CloudRecord(server_id,
+                               site_name,
+                               server_name,
+                               server_user_id,
+                               server_project_id,
+                               fqan,
+                               status=status,
+                               image_id=image_id,
+                               user_dn=user_dn)
+
+        d_02 = r.as_dict(version="0.2")
+        self.assertEqual("BujamyWObokach", d_02['MachineName'])
