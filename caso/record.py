@@ -198,7 +198,7 @@ class CloudRecord(object):
         d = {
             'VMUUID': self.uuid,
             'SiteName': self.site,
-            'MachineName': self.name,
+            'MachineName': self.name.encode('ascii', 'ignore').decode('utf-8'),
             'LocalUserId': self.user_id,
             'LocalGroupId': self.group_id,
             'FQAN': self.fqan,
